@@ -4,7 +4,6 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 import org.springframework.stereotype.Component;
-
 import com.wstemplate.resources.ClientResource;
 
 @Component
@@ -13,5 +12,6 @@ public class JerseyConfig extends ResourceConfig {
 		register(RequestContextFilter.class);
         register(ClientResource.class);
         register(JacksonFeature.class);
+        register(CORSFilter.class);
 	}
 }
