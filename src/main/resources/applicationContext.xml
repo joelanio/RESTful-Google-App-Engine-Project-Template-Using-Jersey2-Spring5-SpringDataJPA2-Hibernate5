@@ -12,10 +12,10 @@
 		http://www.springframework.org/schema/data/jpa
 		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-  <context:annotation-config/>
+  <context:annotation-config/> 
   <context:component-scan base-package="com.wstemplate"/>
   <jpa:repositories base-package="com.wstemplate.model.repositories"></jpa:repositories>
-    
+  
   	<!-- conexao.properties -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

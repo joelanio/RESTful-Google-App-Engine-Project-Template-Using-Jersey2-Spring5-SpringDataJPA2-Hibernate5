@@ -7,4 +7,4 @@
        <!-- Entities mapping -->
        <mapping class="com.wstemplate.model.entities.Client"/>
     </session-factory>
-</hibernate-configuration>
+</hibernate-configuration> 

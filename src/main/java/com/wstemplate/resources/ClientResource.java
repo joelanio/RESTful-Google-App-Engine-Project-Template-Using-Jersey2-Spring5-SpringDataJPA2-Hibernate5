@@ -3,6 +3,7 @@ package com.wstemplate.resources;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,10 +14,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.wstemplate.errorhandling.ResourceNotFoundException;
 import com.wstemplate.model.entities.Client;
 import com.wstemplate.model.repositories.ClientRepository;
@@ -48,6 +51,14 @@ public class ClientResource {
 	@Path("{id}")
 	public ResponseEntity<Client> getClientById(@PathParam(value = "id") Long id) throws ResourceNotFoundException {
 		Client c = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found :: " + id));
+		return ResponseEntity.ok().body(c);
+	}
+
+	@POST
+	@Path("/findbyemail")
+	public ResponseEntity<Client> getClientByEmail(@PathParam(value = "email") String email) throws ResourceNotFoundException {
+		Client c = clientRepository.findByEmail(email);
+		if(c==null) throw new ResourceNotFoundException("Client not found :: " + email);
 		return ResponseEntity.ok().body(c);
 	}
 

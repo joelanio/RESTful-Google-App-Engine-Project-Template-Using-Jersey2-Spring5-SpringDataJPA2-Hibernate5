@@ -7,8 +7,8 @@
   <packaging>war</packaging>
   <version>0.1.0-SNAPSHOT</version>
 
-  <groupId>template-project</groupId>
-  <artifactId>JerseySpringHibernateTemplate</artifactId>
+  <groupId>br.com.ocemanagerws</groupId>
+  <artifactId>ocemanagerws</artifactId>
 
   <properties>
     <appengine.maven.plugin.version>2.4.1</appengine.maven.plugin.version>
@@ -18,7 +18,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <jersey.version>2.35</jersey.version>
-    <spring.version>5.3.10</spring.version> 
+    <spring.version>5.3.10</spring.version>
+    <spring.security.version>5.5.2</spring.security.version>
     <log4j.version>2.14.1</log4j.version>
     <hibernate.version>5.5.7.Final</hibernate.version>
   </properties>
@@ -126,6 +127,13 @@
         <version>${spring.version}</version>
     </dependency>
     
+    <!-- Spring Security Crypto -->
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-crypto</artifactId>
+	    <version>${spring.security.version}</version>
+	</dependency>    
+    
     <!-- Spring Data JPA -->
 	<dependency>
 	    <groupId>org.springframework.data</groupId>
@@ -195,7 +203,7 @@
 	    <version>1.2.6</version>
 	    <scope>test</scope>
 	</dependency>
-	
+		  
   </dependencies>
 
   <build>

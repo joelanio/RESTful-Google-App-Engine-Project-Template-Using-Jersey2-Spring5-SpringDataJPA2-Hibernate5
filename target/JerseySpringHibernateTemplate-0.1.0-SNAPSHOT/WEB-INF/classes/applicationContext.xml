@@ -12,10 +12,20 @@
 		http://www.springframework.org/schema/data/jpa
 		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-  <context:annotation-config/>
+  <context:annotation-config/> 
   <context:component-scan base-package="com.wstemplate"/>
   <jpa:repositories base-package="com.wstemplate.model.repositories"></jpa:repositories>
-    
+  
+	<bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+	   <property name="targetClass" value="org.springframework.util.Log4jConfigurer"/>
+	   <property name="targetMethod" value="initLogging"/>
+	   <property name="arguments">
+	       <list>
+	           <value>classpath:config/log4j.xml</value>
+	       </list>
+	   </property>
+	</bean>
+  
   	<!-- conexao.properties -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

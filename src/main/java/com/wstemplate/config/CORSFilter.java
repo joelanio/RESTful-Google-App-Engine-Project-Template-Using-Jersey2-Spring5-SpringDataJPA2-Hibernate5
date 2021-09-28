@@ -1,14 +1,17 @@
 package com.wstemplate.config;
 
 import java.io.IOException;
+
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 
 @Provider
+@PreMatching
 public class CORSFilter implements ContainerResponseFilter {
 
 	/**
@@ -54,7 +57,7 @@ public class CORSFilter implements ContainerResponseFilter {
             response.getHeaders().add("Access-Control-Allow-Methods",
                 "GET, POST, PUT, DELETE, OPTIONS, HEAD");
             response.getHeaders().add("Access-Control-Allow-Headers",
-                // Whatever other non-standard/safe headers (see list above) 
+                // Whatever other non-standard/safe headers (see list above)
                 // you want the client to be able to send to the server,
                 // put it in this list. And remove the ones you don't want.
                 "X-Requested-With, Authorization, " +
