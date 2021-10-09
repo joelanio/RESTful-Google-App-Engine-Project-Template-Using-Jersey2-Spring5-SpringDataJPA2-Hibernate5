@@ -14,11 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.wstemplate.errorhandling.ResourceNotFoundException;
 import com.wstemplate.model.entities.Client;
@@ -26,7 +25,7 @@ import com.wstemplate.model.repositories.ClientRepository;
 
 @Component
 @Path("/clients")
-@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 public class ClientResource {
 
@@ -43,40 +42,37 @@ public class ClientResource {
 	}
 
 	@GET
-	public List<Client> getAllClients() {
-		return clientRepository.findAll();
+	public Response getAllClients() {
+		List<Client> clients = clientRepository.findAll();
+		return Response.ok(clients).build();
 	}
 
 	@GET
 	@Path("{id}")
-	public ResponseEntity<Client> getClientById(@PathParam(value = "id") Long id) throws ResourceNotFoundException {
-		Client c = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found :: " + id));
-		return ResponseEntity.ok().body(c);
+	public Response getClientById(@PathParam(value = "id") Long id) throws ResourceNotFoundException {
+		Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found :: " + id));
+		return Response.ok(client).build();
 	}
 
 	@POST
 	@Path("/findbyemail")
-	public ResponseEntity<Client> getClientByEmail(@PathParam(value = "email") String email) throws ResourceNotFoundException {
-		Client c = clientRepository.findByEmail(email);
-		if(c==null) throw new ResourceNotFoundException("Client not found :: " + email);
-		return ResponseEntity.ok().body(c);
+	public Response getClientByEmail(@PathParam(value = "email") String email) throws ResourceNotFoundException {
+		Client client = clientRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Client not found with email "+email));
+		return Response.ok(client).build();
 	}
 
 	@POST
 	@Path("/new")
-	public Client createClient(Client c) {
-		return clientRepository.save(c);
+	public Response createClient(Client c) {
+		final Client client = clientRepository.save(c);
+		return Response.ok(client).build();
 	}
 
 	@PUT
-	@Path("{id}")
-	public ResponseEntity<Client> updateClient(@PathParam(value = "id") Long id,
-			@Valid @RequestBody Client clientDetails) throws ResourceNotFoundException {
-		Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found :: " + id));
-		client.setEmail(clientDetails.getEmail());
-		client.setName(clientDetails.getName());
-		final Client updatedClient = clientRepository.save(client);
-		return ResponseEntity.ok(updatedClient);
+	public Response updateClient(@Valid Client c) throws ResourceNotFoundException {
+		Client client = clientRepository.findById(c.getId()).orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+		client = c;
+		return Response.ok(client).build();
 	}
 
 	@DELETE
